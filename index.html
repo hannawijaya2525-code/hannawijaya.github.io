@@ -1522,6 +1522,60 @@ footer {
 .nav.scrolled .nav-cta-ghost { background: transparent; color: var(--mid); border-color: var(--border); }
 .nav.scrolled .nav-cta-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-lo); }
 
+/* ── Hamburger button (mobile only) ───────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile dropdown menu ─────────────────────── */
+.nav-mobile-menu {
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 20px;
+  gap: 4px;
+}
+.nav-mobile-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-mobile-link:last-of-type { border-bottom: none; }
+.nav-mobile-link:hover { color: var(--accent); }
+.nav-mobile-ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
 /* ── Hero profile card (right column) ─────────── */
 .hero-inner { align-items:stretch; }
 .hero-left { flex: 1; min-width: 0; padding-right: 48px; }
@@ -1658,11 +1712,11 @@ sup.metric-ast { margin-left:1px; }
 
 /* ── Mobile: ≤768px ─────────────────────────────────────── */
 @media (max-width: 768px) {
-  /* Nav: keep Work/Contact links, hide Portfolio button */
+  /* Nav: hamburger replaces links + action buttons */
   .nav-inner { padding: 0 20px; gap: 10px; }
-  .nav-links { display: flex; gap: 16px; }
-  .nav-cta-ghost { display: none; }          /* hide Portfolio btn on mobile */
-  .nav-cta { padding: 7px 14px; font-size: 11px; }
+  .nav-links { display: none; }
+  .nav-actions { display: none; }
+  .nav-hamburger { display: flex; }
 
   /* Hero: stack vertically */
   .hero { padding: 100px 20px 56px; }
@@ -2028,11 +2082,22 @@ sup.metric-ast { margin-left:1px; }
     <a href="#top" class="nav-logo">Hanna Wijaya</a>
     <div class="nav-links">
       <a href="#about" class="nav-link">About</a>
-
       <a href="#work" class="nav-link">Work</a>
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
+      <a class="nav-cta" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/Hanna_Wijaya_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+      <a class="nav-cta nav-cta-ghost" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/capability-brief.html" target="_blank" rel="noopener">Capability Brief</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="navMobileMenu" hidden>
+    <a href="#about" class="nav-mobile-link">About</a>
+    <a href="#work" class="nav-mobile-link">Work</a>
+    <a href="#contact" class="nav-mobile-link">Contact</a>
+    <div class="nav-mobile-ctas">
       <a class="nav-cta" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/Hanna_Wijaya_CV.pdf" target="_blank" rel="noopener">Download CV</a>
       <a class="nav-cta nav-cta-ghost" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/capability-brief.html" target="_blank" rel="noopener">Capability Brief</a>
     </div>
@@ -3437,6 +3502,24 @@ sup.metric-ast { margin-left:1px; }
   }
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
+
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('navMobileMenu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = !mobileMenu.hidden;
+    mobileMenu.hidden = isOpen;
+    hamburger.classList.toggle('open', !isOpen);
+    hamburger.setAttribute('aria-expanded', String(!isOpen));
+  });
+  // Close menu when a nav link is tapped
+  mobileMenu.querySelectorAll('.nav-mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.hidden = true;
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
 
   // Payment workbook tabs (Case 3)
   function switchTab(idx) {
