@@ -1548,13 +1548,16 @@ footer {
 
 /* ── Mobile dropdown menu ─────────────────────── */
 .nav-mobile-menu {
+  display: none;
   border-top: 1px solid var(--border);
   background: var(--bg);
   backdrop-filter: blur(12px);
-  display: flex;
   flex-direction: column;
   padding: 16px 20px 20px;
   gap: 4px;
+}
+.nav-mobile-menu.open {
+  display: flex;
 }
 .nav-mobile-link {
   font-size: 15px;
@@ -2093,7 +2096,7 @@ sup.metric-ast { margin-left:1px; }
       <span></span><span></span><span></span>
     </button>
   </div>
-  <div class="nav-mobile-menu" id="navMobileMenu" hidden>
+  <div class="nav-mobile-menu" id="navMobileMenu">
     <a href="#about" class="nav-mobile-link">About</a>
     <a href="#work" class="nav-mobile-link">Work</a>
     <a href="#contact" class="nav-mobile-link">Contact</a>
@@ -2293,7 +2296,7 @@ sup.metric-ast { margin-left:1px; }
 <div class="archive-cta">
   <div class="archive-cta-inner">
     <span class="archive-cta-label">More work</span>
-    <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/work-archive.html" target="_blank" class="archive-cta-link">View full work archive: feature specs, dashboards, process flows, and more →</a>
+    <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/" target="_blank" class="archive-cta-link">View full work archive: feature specs, dashboards, process flows, and more →</a>
   </div>
 </div>
 
@@ -2533,7 +2536,7 @@ sup.metric-ast { margin-left:1px; }
 
         
         <div style="text-align:center;margin-top:20px;">
-          <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/work-archive.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);color:var(--accent);font-size:13px;font-weight:600;padding:10px 22px;border-radius:6px;transition:background 0.2s,border-color 0.2s;text-decoration:none;letter-spacing:0.01em;" onmouseover="this.style.background='var(--accent-lo)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='var(--surface)';this.style.borderColor='var(--border)'">View full work archive&nbsp;→</a>
+          <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);color:var(--accent);font-size:13px;font-weight:600;padding:10px 22px;border-radius:6px;transition:background 0.2s,border-color 0.2s;text-decoration:none;letter-spacing:0.01em;" onmouseover="this.style.background='var(--accent-lo)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='var(--surface)';this.style.borderColor='var(--border)'">View full work archive&nbsp;→</a>
         </div>
 
       </div>      </div>
@@ -3507,15 +3510,15 @@ sup.metric-ast { margin-left:1px; }
   const hamburger = document.getElementById('navHamburger');
   const mobileMenu = document.getElementById('navMobileMenu');
   hamburger.addEventListener('click', () => {
-    const isOpen = !mobileMenu.hidden;
-    mobileMenu.hidden = isOpen;
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', !isOpen);
     hamburger.classList.toggle('open', !isOpen);
     hamburger.setAttribute('aria-expanded', String(!isOpen));
   });
   // Close menu when a nav link is tapped
   mobileMenu.querySelectorAll('.nav-mobile-link').forEach(link => {
     link.addEventListener('click', () => {
-      mobileMenu.hidden = true;
+      mobileMenu.classList.remove('open');
       hamburger.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
     });
