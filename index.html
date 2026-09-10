@@ -1743,7 +1743,20 @@ sup.metric-ast { margin-left:1px; }
 .wb-table,
 .fc-wrap,
 .sc-wrap,
-.asset-body { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+.asset-body,
+.wb-ba-grid,
+.sc-grid,
+.outcome-tiles,
+.case-tools { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+
+@media (max-width: 768px) {
+  .wb-ba-grid { grid-template-columns: 1fr; }
+  .sc-grid { grid-template-columns: 1fr; }
+  .outcome-tiles { flex-wrap: wrap; }
+  .case-drawer-inner { overflow-x: hidden; }
+  .case-assets .asset-card,
+  .case-assets .slot { overflow-x: auto; }
+}
 
 /* ── Workbook footer KPI tiles ───────────────────────────── */
 .wb-footer {
@@ -1961,6 +1974,9 @@ sup.metric-ast { margin-left:1px; }
 
 .contact-cta-row {
   margin-top: 36px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 .contact-cta-btn {
   display: inline-block;
@@ -1975,6 +1991,12 @@ sup.metric-ast { margin-left:1px; }
   transition: opacity 0.15s;
 }
 .contact-cta-btn:hover { opacity: 0.85; }
+.contact-cta-btn-ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+.contact-cta-btn-ghost:hover { background: var(--accent-lo); opacity: 1; }
 
 /* ══ Case drawer: force single-column, contain overflow ══════ */
 .case .case-top                          { grid-template-columns: 1fr !important; gap: 28px !important; }
@@ -2011,7 +2033,7 @@ sup.metric-ast { margin-left:1px; }
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
-      <a class="nav-cta" href="https://drive.google.com/uc?export=download&id=1_8UPTIblouTvW3hqeh0qic5wsIDWdNvf" target="_blank" rel="noopener">Download CV</a>
+      <a class="nav-cta" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/Hanna_Wijaya_CV.pdf" target="_blank" rel="noopener">Download CV</a>
       <a class="nav-cta nav-cta-ghost" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/capability-brief.html" target="_blank" rel="noopener">Capability Brief</a>
     </div>
   </div>
@@ -3378,7 +3400,8 @@ sup.metric-ast { margin-left:1px; }
       </div>
     </div>
     <div class="contact-cta-row">
-      <a href="https://drive.google.com/uc?export=download&id=1_8UPTIblouTvW3hqeh0qic5wsIDWdNvf" class="contact-cta-btn" target="_blank" rel="noopener">Download CV</a>
+      <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/Hanna_Wijaya_CV.pdf" class="contact-cta-btn" target="_blank" rel="noopener">Download CV</a>
+      <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/capability-brief.html" class="contact-cta-btn contact-cta-btn-ghost" target="_blank" rel="noopener">Capability Brief</a>
     </div>
   </div>
 </section>
