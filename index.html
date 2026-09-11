@@ -2103,6 +2103,11 @@ sup.metric-ast { margin-left:1px; }
   /* Case 3's Before/After process-flow diagram is a hardcoded inline
      2-column grid with no responsive fallback of its own. */
   .cs3-ba-grid                             { grid-template-columns: 1fr !important; }
+  /* Coverage bar row (case 2): the long note has white-space:nowrap
+     from its shared .wb-coverage-sub class, so on mobile it overflows
+     the rounded card instead of wrapping. */
+  .wb-coverage                             { flex-wrap: wrap; }
+  .wb-coverage-note                        { white-space: normal; flex-basis: 100%; }
 }
 
 /* On desktop, wide tables scroll horizontally instead of being squeezed */
@@ -2703,7 +2708,7 @@ sup.metric-ast { margin-left:1px; }
                 <div class="wb-coverage-fill"></div>
               </div>
               <span class="wb-coverage-lbl">97%</span>
-              <span class="wb-coverage-sub">Remaining 10% = cancelled sessions (quick manual pass)</span>
+              <span class="wb-coverage-sub wb-coverage-note">Remaining 10% = cancelled sessions (quick manual pass)</span>
             </div>
 
             <!-- Tabs -->
