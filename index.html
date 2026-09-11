@@ -881,7 +881,7 @@ footer {
   overflow: hidden;
   background: var(--surface);
 }
-.asset-body { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.asset-body { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 .asset-label-bar {
   padding: 10px 16px;
   background: var(--bg);
@@ -1367,7 +1367,7 @@ footer {
   font-size: 10px;
 }
 .wb-formula { color: var(--mid); font-family: monospace; font-size: 10px; }
-.wb-table-wrap { overflow-x: auto; max-height: 340px; overflow-y: auto; }
+.wb-table-wrap { overflow-x: auto; max-height: 340px; overflow-y: auto; overscroll-behavior: contain; }
 .wb-table {
   width: 100%;
   border-collapse: collapse;
@@ -2093,7 +2093,7 @@ sup.metric-ast { margin-left:1px; }
   /* Wide tables keep their natural column widths and scroll horizontally
      instead of being squeezed to fit. Squeezing a 9-10 column table into
      320px makes every cell unreadable (single characters). */
-  .case .wb-table-wrap                     { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .case .wb-table-wrap                     { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
   /* Case 3's Before/After process-flow diagram is a hardcoded inline
      2-column grid with no responsive fallback of its own. */
   .cs3-ba-grid                             { grid-template-columns: 1fr !important; }
