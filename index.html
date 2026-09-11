@@ -2027,6 +2027,12 @@ sup.metric-ast { margin-left:1px; }
   .about-layout { flex-direction: column; gap: 32px; }
   .about-photo-wrap { flex: 0 0 auto; width: 180px; }
   .about-sidebar { display: none; }
+  /* Credentials: stack label above the list, and each item's name
+     above its date, instead of the desktop side-by-side layout that
+     squeezes into a narrow column on mobile. */
+  .about-creds { flex-direction: column; gap: 14px; }
+  .about-cred-lbl { width: auto; padding-top: 0; }
+  .about-cred-item { flex-direction: column; align-items: flex-start; gap: 2px; }
 }
 
 .contact-cta-row {
