@@ -2055,25 +2055,33 @@ sup.metric-ast { margin-left:1px; }
 }
 .contact-cta-btn-ghost:hover { background: var(--accent-lo); opacity: 1; }
 
-/* ══ Case drawer: force single-column, contain overflow ══════ */
-.case .case-top                          { grid-template-columns: 1fr !important; gap: 28px !important; }
-.case .case-body:not(.case-body--stack)  { grid-template-columns: 1fr !important; }
-.case .case-body                         { gap: 40px !important; }
-.case .case-meta                         { grid-template-columns: 1fr 1fr; }
+/* ══ Case drawer: contain overflow (all sizes) ══════ */
 .case                                    { overflow-x: clip; }
 .case .case-inner                        { max-width: 100%; box-sizing: border-box; }
-.case .case-assets                       { width: 100%; min-width: 0; }
-.case .asset-card                        { width: 100%; min-width: 0; box-sizing: border-box; }
-.case .asset-body                        { width: 100%; min-width: 0; overflow-x: auto; box-sizing: border-box; }
-.case .wb-wrap                           { width: 100%; min-width: 0; box-sizing: border-box; }
-.case .wb-formula-bar                    { overflow: hidden; max-width: 100%; }
-.case .wb-formula                        { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-.case .wb-sheet                          { overflow: hidden; max-width: 100%; }
-.case .wb-table-wrap                     { width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; }
-/* table-layout:fixed forces the table to honour width:100% even when cell content is wide */
-.case .wb-table                          { table-layout: fixed; min-width: 0; width: 100%; word-break: break-word; }
-.case .wb-table th, .case .wb-table td   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .case .wb-pipeline                       { overflow-x: auto; max-width: 100%; min-width: 0; }
+
+/* ══ Case drawer: force single-column, squeeze tables (mobile only) ══════ */
+@media (max-width: 768px) {
+  .case .case-top                          { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .case .case-body:not(.case-body--stack)  { grid-template-columns: 1fr !important; }
+  .case .case-body                         { gap: 40px !important; }
+  .case .case-meta                         { grid-template-columns: 1fr 1fr; }
+  .case .case-assets                       { width: 100%; min-width: 0; }
+  .case .asset-card                        { width: 100%; min-width: 0; box-sizing: border-box; }
+  .case .asset-body                        { width: 100%; min-width: 0; overflow-x: auto; box-sizing: border-box; }
+  .case .wb-wrap                           { width: 100%; min-width: 0; box-sizing: border-box; }
+  .case .wb-formula-bar                    { overflow: hidden; max-width: 100%; }
+  .case .wb-formula                        { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .case .wb-sheet                          { overflow: hidden; max-width: 100%; }
+  .case .wb-table-wrap                     { width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; }
+  /* table-layout:fixed forces the table to honour width:100% even when cell content is wide */
+  .case .wb-table                          { table-layout: fixed; min-width: 0; width: 100%; word-break: break-word; }
+  .case .wb-table th, .case .wb-table td   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+/* On desktop, wide tables scroll horizontally instead of being squeezed */
+.case .wb-table-wrap                     { overflow-x: auto; max-width: 100%; }
+
 /* CS1 approach list: absolute counter, text flows normally as block */
 .case .case-prose-block ol li            { position: relative !important; display: block !important; padding-left: 32px !important; }
 .case .case-prose-block ol li::before   { position: absolute !important; left: 0 !important; top: 0 !important; }
