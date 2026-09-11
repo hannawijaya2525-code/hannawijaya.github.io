@@ -552,21 +552,26 @@ button { cursor: pointer; font: inherit; }
   align-items: start;
 }
 .case-body--stack {
-  grid-template-columns: 1fr;
+  /* minmax(0,1fr), not bare 1fr: a bare 1fr track's minimum is its
+     content's min-content, so the 3-column prose grid nested inside
+     forces this column wider than the drawer and gets clipped by
+     .case's overflow-x:clip. minmax(0,1fr) lets it shrink to the
+     container width instead, and the prose grid wraps normally. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 48px;
 }
 .case-body--stack .case-prose {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 48px;
 }
 @media (max-width: 1024px) {
-  .case-body--stack .case-prose { grid-template-columns: 1fr 1fr; }
+  .case-body--stack .case-prose { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 768px) {
-  .case-body--stack .case-prose { grid-template-columns: 1fr; }
+  .case-body--stack .case-prose { grid-template-columns: minmax(0, 1fr); }
 }
-.case-prose-block { margin-bottom: 36px; }
+.case-prose-block { margin-bottom: 36px; min-width: 0; }
 .case-prose-block:last-child { margin-bottom: 0; }
 .case-prose-block h3 {
   font-size: 10px;
