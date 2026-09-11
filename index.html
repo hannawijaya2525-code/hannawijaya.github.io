@@ -2073,10 +2073,10 @@ sup.metric-ast { margin-left:1px; }
   .case .wb-formula-bar                    { overflow: hidden; max-width: 100%; }
   .case .wb-formula                        { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
   .case .wb-sheet                          { overflow: hidden; max-width: 100%; }
-  .case .wb-table-wrap                     { width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; }
-  /* table-layout:fixed forces the table to honour width:100% even when cell content is wide */
-  .case .wb-table                          { table-layout: fixed; min-width: 0; width: 100%; word-break: break-word; }
-  .case .wb-table th, .case .wb-table td   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Wide tables keep their natural column widths and scroll horizontally
+     instead of being squeezed to fit. Squeezing a 9-10 column table into
+     320px makes every cell unreadable (single characters). */
+  .case .wb-table-wrap                     { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
 
 /* On desktop, wide tables scroll horizontally instead of being squeezed */
