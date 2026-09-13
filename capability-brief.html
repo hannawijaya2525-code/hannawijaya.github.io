@@ -73,6 +73,16 @@ img { max-width: 100%; display: block; }
   position: relative;
   overflow: hidden;
 }
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
 .slide-inner {
   width: min(960px, 100% - 96px);
   margin: 0 auto;
@@ -125,7 +135,7 @@ img { max-width: 100%; display: block; }
   font-size: clamp(32px, 5vw, 52px);
   line-height: 1.1;
   color: var(--ink);
-  margin-bottom: 40px;
+  margin-bottom: clamp(32px, 6vh, 72px);
   text-wrap: balance;
 }
 
@@ -147,7 +157,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.75);
-  margin-bottom: 32px;
+  margin-bottom: clamp(24px, 4vh, 56px);
 }
 .cover-name {
   font-family: 'Instrument Serif', Georgia, serif;
@@ -168,13 +178,13 @@ img { max-width: 100%; display: block; }
   font-style: italic;
   font-size: clamp(16px, 2.5vw, 22px);
   color: rgba(255,255,255,0.78);
-  margin-bottom: 56px;
+  margin-bottom: clamp(40px, 8vh, 100px);
 }
 .cover-stats {
   display: flex;
   gap: 0;
   border-top: 1px solid rgba(255,255,255,0.18);
-  padding-top: 32px;
+  padding-top: clamp(24px, 5vh, 64px);
 }
 .cover-stat {
   flex: 1;
@@ -380,13 +390,13 @@ img { max-width: 100%; display: block; }
 .hiw-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px 40px;
+  gap: clamp(24px, 4vh, 40px) 40px;
 }
 .hiw-card {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 22px 24px;
+  padding: clamp(22px, 3.5vh, 36px) 24px;
   border: 1px solid var(--border);
   border-top: 3px solid var(--accent);
   border-radius: 6px;
@@ -417,7 +427,7 @@ img { max-width: 100%; display: block; }
 .contact-grid {
   display: flex;
   gap: 48px;
-  margin-bottom: 48px;
+  margin-bottom: clamp(48px, 8vh, 96px);
 }
 .contact-item-lbl {
   font-size: 10px;
@@ -450,6 +460,13 @@ img { max-width: 100%; display: block; }
   transition: opacity 0.15s;
 }
 .contact-btn:hover { opacity: 0.88; }
+.contact-btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.contact-btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+.contact-btn-ghost:hover { opacity: 1; border-color: #fff; }
 #slide-contact .slide-num { color: rgba(255,255,255,0.60); }
 
 /* ── Responsive ────────────────────────────────────────── */
@@ -480,7 +497,7 @@ img { max-width: 100%; display: block; }
 
 <!-- ══ SLIDE 1: COVER ══════════════════════════════════════ -->
 <section class="slide" id="slide-cover" data-index="0">
-  <span class="cover-logo">Hanna Wijaya</span>
+  <a class="cover-logo" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/" target="_blank" rel="noopener">Hanna Wijaya</a>
   <div class="slide-inner">
     <p class="cover-eyebrow">Capability Brief · 2026</p>
     <h1 class="cover-name">Hanna<br>Wijaya</h1>
@@ -665,11 +682,11 @@ img { max-width: 100%; display: block; }
     <div class="hiw-grid">
       <div class="hiw-card">
         <div class="hiw-label">End-to-end ownership</div>
-        <div class="hiw-text">I don't hand work off at the edges. From identifying the problem to shipping the fix and monitoring its impact, I own the full loop — requirements, implementation brief, UAT, release, and post-launch.</div>
+        <div class="hiw-text">I don't hand work off at the edges. From identifying the problem to shipping the fix and monitoring its impact, I own the full loop: requirements, implementation brief, UAT, release, and post-launch.</div>
       </div>
       <div class="hiw-card">
         <div class="hiw-label">Systems thinking</div>
-        <div class="hiw-text">I look for the process failure before the task failure. When something breaks or slows down, I trace it upstream — then build a solution that handles the root cause, not just the symptom.</div>
+        <div class="hiw-text">I look for the process failure before the task failure. When something breaks or slows down, I trace it upstream, then build a solution that handles the root cause, not just the symptom.</div>
       </div>
       <div class="hiw-card">
         <div class="hiw-label">Operations meets technology</div>
@@ -677,7 +694,7 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="hiw-card">
         <div class="hiw-label">Documentation as infrastructure</div>
-        <div class="hiw-text">Every process I build gets documented — SOPs, logic flows, user guides, post-launch comms. If it only lives in my head, it doesn't scale. Good documentation is how I protect the work I've done.</div>
+        <div class="hiw-text">Every process I build gets documented: SOPs, logic flows, user guides, post-launch comms. If it only lives in my head, it doesn't scale. Good documentation is how I protect the work I've done.</div>
       </div>
     </div>
   </div>
@@ -704,7 +721,10 @@ img { max-width: 100%; display: block; }
       </div>
     </div>
     <p class="contact-visa">Open for visa sponsorship and relocation</p>
-    <a href="https://drive.google.com/uc?export=download&id=1_8UPTIblouTvW3hqeh0qic5wsIDWdNvf" class="contact-btn" target="_blank" rel="noopener">Download CV</a>
+    <div class="contact-btn-row">
+      <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/Hanna_Wijaya_CV.pdf" download="Hanna_Wijaya_CV.pdf" class="contact-btn" target="_blank" rel="noopener">Download CV</a>
+      <a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/" class="contact-btn contact-btn-ghost" target="_blank" rel="noopener">View Full Portfolio</a>
+    </div>
   </div>
   <span class="slide-num">07 / 07</span>
 </section>
