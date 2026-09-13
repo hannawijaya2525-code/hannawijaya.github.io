@@ -103,12 +103,11 @@ img { max-width: 100%; display: block; }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--border);
+  background: rgba(255,255,255,0.35);
   cursor: pointer;
   transition: all 0.25s;
 }
-.dot.active { background: var(--accent); transform: scale(1.5); }
-#slide-cover ~ * .dot { background: rgba(255,255,255,0.3); }
+.dot.active { background: #fff; transform: scale(1.5); }
 
 /* ── Slide counter ─────────────────────────────────────── */
 .slide-num {
