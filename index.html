@@ -3792,8 +3792,10 @@ sup.metric-ast { margin-left:1px; }
   // Lenis at all, where the same drawer-scroll sequence never leaked.
   window.initLenis = function () {
     window.lenis = new Lenis({
-      lerp: 0.1,
+      duration: 0.7,
+      easing: function (t) { return 1 - Math.pow(1 - t, 3); }, // easeOutCubic: quick, decisive settle
       smoothWheel: true,
+      wheelMultiplier: 1.15,
       // Lenis's own first-class escape hatch: skip any event whose
       // target sits inside an open case-study drawer, so the drawer's
       // native overflow-y:auto scroll handles it instead.
