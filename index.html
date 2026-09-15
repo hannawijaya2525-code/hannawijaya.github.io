@@ -57,9 +57,13 @@
 
 /* ─── Reset ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; overflow-x: hidden; }
+/* scroll-behavior:smooth is the no-JS / reduced-motion fallback for
+   anchor jumps. Lenis (bottom of page) takes over actual wheel/trackpad
+   scrolling when it loads, which is where the felt "scroll speed" comes
+   from — plain CSS smoothing never touches that. */
+html { scroll-behavior: smooth; overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; scroll-snap-type: none; }
+  html { scroll-behavior: auto; }
 }
 body {
   background: var(--bg);
@@ -79,14 +83,10 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font: inherit; }
 
-/* ─── Section scroll-snap ─────────────────────────────── */
-/* Settles gently at each major section on scroll instead of a hard
-   page-jack; "proximity" (not "mandatory") so it never traps the
-   scroll mid-section on long content like #work. */
-#top, #about, #work, #contact {
-  scroll-snap-align: start;
-  scroll-margin-top: 64px; /* clears the fixed nav (.nav-inner height) */
-}
+/* Anchor targets clear the fixed nav — used by the CSS-only fallback
+   (no JS / reduced motion); Lenis's own scrollTo uses its NAV_OFFSET
+   constant below instead. */
+#top, #about, #work, #contact { scroll-margin-top: 64px; }
 
 /* ─── Scroll reveal ───────────────────────────────────── */
 .reveal {
@@ -2412,7 +2412,7 @@ sup.metric-ast { margin-left:1px; }
 <div id="case-backdrop" class="case-backdrop"></div>
 
 <!-- ════ CASE 1 ═══════════════════════════════════════════ -->
-<section id="case-1" class="case">
+<section id="case-1" class="case" data-lenis-prevent>
   <div class="case-inner">
     <button class="case-close" onclick="closeCase()">✕ &nbsp;Close</button>
 
@@ -2659,7 +2659,7 @@ sup.metric-ast { margin-left:1px; }
 
 <!-- ════ CONTACT ══════════════════════════════════════════ -->
 <!-- ════ CASE 2 ═══════════════════════════════════════════ -->
-<section id="case-2" class="case">
+<section id="case-2" class="case" data-lenis-prevent>
   <div class="case-inner">
     <button class="case-close" onclick="closeCase()">✕ &nbsp;Close</button>
 
@@ -3000,7 +3000,7 @@ sup.metric-ast { margin-left:1px; }
 </section>
 
 <!-- ════ CASE 3 ═══════════════════════════════════════════ -->
-<section id="case-3" class="case">
+<section id="case-3" class="case" data-lenis-prevent>
   <div class="case-inner">
     <button class="case-close" onclick="closeCase()">✕ &nbsp;Close</button>
 
@@ -3281,7 +3281,7 @@ sup.metric-ast { margin-left:1px; }
 </section>
 
 <!-- ════ CASE 4 ═══════════════════════════════════════════ -->
-<section id="case-4" class="case">
+<section id="case-4" class="case" data-lenis-prevent>
   <div class="case-inner">
     <button class="case-close" onclick="closeCase()">✕ &nbsp;Close</button>
 
@@ -3649,22 +3649,97 @@ sup.metric-ast { margin-left:1px; }
     });
   }
 
-  // Case study drawers
+  // Case study drawers.
+  //
+  // Keeping the background page from scrolling while a drawer is open
+  // turned out to need real force: lenis.stop(), lenis.destroy(),
+  // documentElement/body overflow:hidden, and preventDefault +
+  // stopImmediatePropagation on the wheel event all still let the first
+  // scroll tick after opening leak through intermittently (confirmed via
+  // A/B testing — a build with the Lenis <script> removed entirely never
+  // leaked, one with it present and even .destroy()'d on open still did,
+  // so something inside Lenis sets window.scrollY through a path none of
+  // those blocked). Patching window.scrollTo/scrollBy to no-ops while a
+  // drawer is open closes that off directly, regardless of which caller
+  // or mechanism would otherwise have used them.
+  var realScrollTo = window.scrollTo.bind(window);
+  var realScrollBy = window.scrollBy.bind(window);
+  var realScroll = window.scroll.bind(window);
+  var htmlScrollTopDesc = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop');
+  var lockedEl = null;
+  function lockBackgroundScroll() {
+    window.scrollTo = function () {};
+    window.scrollBy = function () {};
+    window.scroll = function () {};
+    // Covers direct `documentElement.scrollTop = x` / `body.scrollTop = x`
+    // assignment too, in case that's the actual path being used — every
+    // other angle (stop/destroy, overflow:hidden, wheel interception,
+    // scrollTo/scrollBy patching) still let the first post-open scroll
+    // leak through intermittently, for reasons that never pinned down
+    // cleanly enough to target more narrowly than "every path at once."
+    [document.documentElement, document.body].forEach(function (el) {
+      Object.defineProperty(el, 'scrollTop', {
+        configurable: true,
+        get: function () { return htmlScrollTopDesc.get.call(this); },
+        set: function () {}
+      });
+    });
+  }
+  function unlockBackgroundScroll() {
+    window.scrollTo = realScrollTo;
+    window.scrollBy = realScrollBy;
+    window.scroll = realScroll;
+    [document.documentElement, document.body].forEach(function (el) {
+      Object.defineProperty(el, 'scrollTop', htmlScrollTopDesc);
+    });
+  }
+
   function openCase(id) {
     document.querySelectorAll('.case').forEach(p => p.classList.remove('drawer-open'));
     var panel = document.getElementById(id);
     panel.classList.add('drawer-open');
     document.getElementById('case-backdrop').classList.add('drawer-open');
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     panel.scrollTop = 0;
+    if (window.destroyLenis) window.destroyLenis();
+    lockBackgroundScroll();
   }
   function closeCase() {
     document.querySelectorAll('.case').forEach(p => p.classList.remove('drawer-open'));
     document.getElementById('case-backdrop').classList.remove('drawer-open');
+    document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
+    unlockBackgroundScroll();
+    if (window.initLenis) window.initLenis();
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCase(); });
   document.getElementById('case-backdrop').addEventListener('click', closeCase);
+
+  // Also redirect wheel/touch input straight to the panel's own
+  // scrollTop, so scrolling inside an open drawer still works (the
+  // scrollTo/scrollBy patch above only stops the *background* from
+  // moving — it doesn't make the panel itself scroll on its own).
+  var drawerTouchY = null;
+  window.addEventListener('wheel', function (e) {
+    var openPanel = document.querySelector('.case.drawer-open');
+    if (!openPanel) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    openPanel.scrollTop += e.deltaY;
+  }, { passive: false, capture: true });
+  window.addEventListener('touchstart', function (e) {
+    if (document.querySelector('.case.drawer-open')) drawerTouchY = e.touches[0].clientY;
+  }, { passive: true, capture: true });
+  window.addEventListener('touchmove', function (e) {
+    var openPanel = document.querySelector('.case.drawer-open');
+    if (!openPanel) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var y = e.touches[0].clientY;
+    if (drawerTouchY !== null) openPanel.scrollTop += (drawerTouchY - y);
+    drawerTouchY = y;
+  }, { passive: false, capture: true });
 
   // Scroll-reveal: fade/rise .reveal elements in once, as they near the viewport
   (function () {
@@ -3685,6 +3760,67 @@ sup.metric-ast { margin-left:1px; }
     }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
     els.forEach(function (el) { observer.observe(el); });
   })();
+</script>
+
+<!-- Lenis: inertia-smoothed wheel/trackpad scroll. This is what actually
+     changes the felt scroll speed — CSS scroll-behavior only smooths
+     anchor jumps, never ordinary wheel scrolling. Skipped entirely for
+     prefers-reduced-motion, where the page falls back to native scroll. -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof Lenis === 'undefined') return;
+
+  var NAV_OFFSET = -64; // clears the fixed nav (.nav-inner height)
+  var rafRunning = false;
+
+  function raf(time) {
+    if (window.lenis) window.lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  function startRaf() {
+    if (rafRunning) return;
+    rafRunning = true;
+    requestAnimationFrame(raf);
+  }
+
+  // openCase/closeCase call these directly. lenis.stop() alone turned out
+  // not to be enough to keep Lenis from still driving the background page
+  // while a case-study drawer is open — only a full destroy()/recreate
+  // reliably cuts it off, confirmed by comparing against a build with no
+  // Lenis at all, where the same drawer-scroll sequence never leaked.
+  window.initLenis = function () {
+    window.lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      // Lenis's own first-class escape hatch: skip any event whose
+      // target sits inside an open case-study drawer, so the drawer's
+      // native overflow-y:auto scroll handles it instead.
+      prevent: function (node) { return !!(node.closest && node.closest('.case.drawer-open')); }
+    });
+    startRaf();
+  };
+  window.destroyLenis = function () {
+    if (window.lenis) window.lenis.destroy();
+    window.lenis = null;
+  };
+
+  window.initLenis();
+
+  // Route in-page anchor nav (top bar + hero CTAs) through Lenis so the
+  // jump gets the same inertia easing instead of native instant/smooth scroll.
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    var hash = link.getAttribute('href');
+    if (!hash || hash === '#') return;
+    var target = document.querySelector(hash);
+    if (!target) return;
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (window.lenis) window.lenis.scrollTo(target, { offset: NAV_OFFSET });
+    });
+  });
+})();
 </script>
 
 </body>
