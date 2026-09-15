@@ -57,7 +57,10 @@
 
 /* ─── Reset ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; scroll-snap-type: y proximity; overflow-x: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; scroll-snap-type: none; }
+}
 body {
   background: var(--bg);
   color: var(--ink);
@@ -75,6 +78,30 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font: inherit; }
+
+/* ─── Section scroll-snap ─────────────────────────────── */
+/* Settles gently at each major section on scroll instead of a hard
+   page-jack; "proximity" (not "mandatory") so it never traps the
+   scroll mid-section on long content like #work. */
+#top, #about, #work, #contact {
+  scroll-snap-align: start;
+  scroll-margin-top: 64px; /* clears the fixed nav (.nav-inner height) */
+}
+
+/* ─── Scroll reveal ───────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.work-grid .reveal:nth-child(1) { transition-delay: 0ms; }
+.work-grid .reveal:nth-child(2) { transition-delay: 90ms; }
+.work-grid .reveal:nth-child(3) { transition-delay: 180ms; }
+.work-grid .reveal:nth-child(4) { transition-delay: 270ms; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.is-visible { opacity: 1; transform: none; transition: none; }
+}
 
 /* ─── Nav ─────────────────────────────────────────────── */
 .nav {
@@ -2293,7 +2320,7 @@ sup.metric-ast { margin-left:1px; }
 
     <div class="work-grid">
       <!-- Card 1 -->
-      <a href="javascript:void(0)" class="work-card" onclick="openCase('case-1')">
+      <a href="javascript:void(0)" class="work-card reveal" onclick="openCase('case-1')">
         <div class="work-card-n">01</div>
         <div class="work-card-tags">
           <span class="work-tag">ClickUp · UAT · PRD</span>
@@ -2312,7 +2339,7 @@ sup.metric-ast { margin-left:1px; }
       </a>
 
       <!-- Card 2 -->
-      <a href="javascript:void(0)" class="work-card" onclick="openCase('case-2')">
+      <a href="javascript:void(0)" class="work-card reveal" onclick="openCase('case-2')">
         <div class="work-card-n">02</div>
         <div class="work-card-tags">
           <span class="work-tag">AI · OCR · Google Sheets</span>
@@ -2331,7 +2358,7 @@ sup.metric-ast { margin-left:1px; }
       </a>
 
       <!-- Card 3 -->
-      <a href="javascript:void(0)" class="work-card" onclick="openCase('case-3')">
+      <a href="javascript:void(0)" class="work-card reveal" onclick="openCase('case-3')">
         <div class="work-card-n">03</div>
         <div class="work-card-tags">
           <span class="work-tag">CMS · In-app module</span>
@@ -2350,7 +2377,7 @@ sup.metric-ast { margin-left:1px; }
       </a>
 
       <!-- Card 4 -->
-      <a href="javascript:void(0)" class="work-card" onclick="openCase('case-4')">
+      <a href="javascript:void(0)" class="work-card reveal" onclick="openCase('case-4')">
         <div class="work-card-n">04</div>
         <div class="work-card-tags">
           <span class="work-tag">Excel automation</span>
@@ -3638,6 +3665,26 @@ sup.metric-ast { margin-left:1px; }
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCase(); });
   document.getElementById('case-backdrop').addEventListener('click', closeCase);
+
+  // Scroll-reveal: fade/rise .reveal elements in once, as they near the viewport
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+    els.forEach(function (el) { observer.observe(el); });
+  })();
 </script>
 
 </body>
