@@ -50,7 +50,19 @@
   --hero-bg:      #F4F4F4;
   --hero-text:    #2E2E2E;
   --hero-mid:     #5A5858;
+  --container:    1280px;
+  --hero-container: 1280px;
 }
+/* Widen the content column on large monitors so the page fills the
+   screen proportionally instead of sitting in a fixed 1280px strip
+   with ever-growing empty margins as the display gets bigger. The
+   hero grows more conservatively since its asymmetric prose+card
+   layout leaves an ugly gap if stretched as far as the grid-based
+   sections below it. */
+@media (min-width: 1600px) { :root { --container: 1440px; --hero-container: 1360px; } }
+@media (min-width: 2000px) { :root { --container: 1680px; --hero-container: 1440px; } }
+@media (min-width: 2600px) { :root { --container: 1960px; --hero-container: 1520px; } }
+@media (min-width: 3400px) { :root { --container: 2280px; --hero-container: 1600px; } }
 
 
 
@@ -119,7 +131,7 @@ button { cursor: pointer; font: inherit; }
   border-bottom: 1px solid var(--border);
 }
 .nav-inner {
-  max-width: 1280px;
+  max-width: var(--container);
   margin: 0 auto;
   padding: 0 48px;
   height: 64px;
@@ -188,7 +200,7 @@ button { cursor: pointer; font: inherit; }
   pointer-events: none;
 }
 .hero-inner {
-  max-width: 1280px;
+  max-width: var(--hero-container);
   margin: 0 auto;
   display: flex;
   align-items: stretch;
@@ -214,7 +226,7 @@ button { cursor: pointer; font: inherit; }
 }
 .hero-headline {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: clamp(56px, 7.5vw, 100px);
+  font-size: clamp(56px, 7.5vw, 128px);
   font-weight: 400;
   line-height: 1.04;
   letter-spacing: -0.025em;
@@ -359,7 +371,7 @@ button { cursor: pointer; font: inherit; }
 
 /* ─── Sections ────────────────────────────────────────── */
 .section { padding: 96px 48px; }
-.section-inner { max-width: 1280px; margin: 0 auto; }
+.section-inner { max-width: var(--container); margin: 0 auto; }
 .section-label {
   font-size: 11px;
   font-weight: 600;
@@ -370,7 +382,7 @@ button { cursor: pointer; font: inherit; }
 }
 .section-heading {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: clamp(30px, 3.5vw, 46px);
+  font-size: clamp(30px, 3.5vw, 58px);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -886,7 +898,7 @@ footer {
   padding: 32px 48px;
 }
 .footer-inner {
-  max-width: 1280px;
+  max-width: var(--container);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -1738,7 +1750,7 @@ sup.metric-ast { margin-left:1px; }
   padding: 20px 48px;
 }
 .archive-cta-inner {
-  max-width: 1280px; margin: 0 auto;
+  max-width: var(--container); margin: 0 auto;
   display: flex; align-items: center; gap: 20px;
 }
 .archive-cta-label {
