@@ -184,6 +184,7 @@ img{max-width:100%;display:block;}a{color:inherit;text-decoration:none;}
 .brief-tag-cms{background:#eef5ee;color:#2a6a2a;border-color:#c0dfc0;}
 .brief-tag-app{background:var(--accent-lo);color:var(--accent);border-color:var(--accent-mid);}
 .brief-tag-both{background:#f5eeff;color:#6a2a8a;border-color:#d4b0e8;}
+.brief-tag-design{background:#fdf3e2;color:#a06a00;border-color:#f0d99e;}
 .brief-status{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
 .brief-status-live{background:#eaf5ea;color:#2a7a2a;border:1px solid #b8e0b8;}
 .brief-status-review{background:#fef3e2;color:#c07a00;border:1px solid #f5d79e;}
@@ -344,6 +345,61 @@ footer{background:var(--hero-bg);border-top:1px solid var(--border);padding:22px
           <div class="brief-section">
             <div class="brief-section-label">Future Consideration</div>
             <div class="brief-section-text">FAQ content database to serve as a structured knowledge source for the planned CMS AI chatbot, enabling the bot to pull from maintained, admin-curated content rather than unstructured text.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ DESIGN QA ═══════════════════════════ -->
+<section class="arch-section">
+  <div class="arch-inner">
+    <div class="arch-label">Design Quality Assurance</div>
+    <h2 class="arch-heading">Figma UI/UX Audit &amp; AI-Agent Review Workflow</h2>
+    <p class="arch-sub">Beyond product requirements, Hanna runs structured design QA passes on the team's Figma reference files, then routes findings into an AI design agent as prioritized natural-language prompts rather than editing every screen by hand.</p>
+    <div class="g1">
+
+      <div class="brief-card">
+        <div class="brief-header">
+          <div class="brief-header-left">
+            <div class="brief-title">Multi-Flow UI/UX Reference Audit</div>
+            <div class="brief-meta">
+              <span class="brief-tag brief-tag-design">Design QA</span>
+              <span class="brief-status brief-status-progress">Prompts Drafted, Queued for Agent</span>
+            </div>
+          </div>
+        </div>
+        <div class="brief-body">
+          <div class="brief-section">
+            <div class="brief-section-label">Ownership Context</div>
+            <div class="brief-section-text">Before Hanna took over this product, the trainer app had only a basic session reminder, an unreliable certificate upload flow, no invoice visibility on the profile page, no location/map extraction on sessions, and no FAQ, incident report, or audit findings modules at all. The admin portal itself was non-functional, crashing on login. All of these were designed and built out as part of taking ownership of the app.</div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">Objective</div>
+            <div class="brief-section-text">Review the current 60+ screen Figma reference file spanning trainer, admin, and auditor journeys for UI/UX consistency, data-integrity gaps, and component reuse issues, then convert findings into a prioritized action list.</div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">Method</div>
+            <div class="brief-req-list">
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Screen-by-screen visual audit across every flow in the file, cross-checked against the shared component library</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Findings split by severity and by owner: cosmetic fixes handled hands-on to build Figma fluency; systemic issues batched into natural-language prompts for the file's AI design agent</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Each agent run verified against a fresh screenshot before sign-off, rather than trusting the agent's own change summary</span></div>
+            </div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">Representative Findings</div>
+            <div class="brief-req-list">
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Unfilled template placeholder text present across roughly a third of admin- and auditor-facing screens, never replaced with realistic sample content</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Two diverging versions of the same screen in circulation, one carrying a broken calculated field and leftover internal test copy</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Rating inputs defaulting to a pre-filled value instead of an empty state, risking an unintended score being read as submitted</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Inconsistent header icon and overflow handling between screens sharing the same underlying component</span></div>
+            </div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">Outcome</div>
+            <div class="brief-section-text">Findings consolidated into a single batched prompt set for the next AI-agent session, with a separate flag for replacing any residual real personal data in sample content with fictional equivalents before the file is shared externally. Workflow is designed to repeat on future review passes.</div>
           </div>
         </div>
       </div>
