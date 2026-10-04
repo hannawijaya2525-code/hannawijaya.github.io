@@ -185,6 +185,7 @@ img{max-width:100%;display:block;}a{color:inherit;text-decoration:none;}
 .brief-tag-app{background:var(--accent-lo);color:var(--accent);border-color:var(--accent-mid);}
 .brief-tag-both{background:#f5eeff;color:#6a2a8a;border-color:#d4b0e8;}
 .brief-tag-design{background:#fdf3e2;color:#a06a00;border-color:#f0d99e;}
+.brief-tag-auto{background:#e8f4f3;color:#1a7a73;border-color:#b8e0dc;}
 .brief-status{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
 .brief-status-live{background:#eaf5ea;color:#2a7a2a;border:1px solid #b8e0b8;}
 .brief-status-review{background:#fef3e2;color:#c07a00;border:1px solid #f5d79e;}
@@ -367,7 +368,7 @@ footer{background:var(--hero-bg);border-top:1px solid var(--border);padding:22px
             <div class="brief-title">Multi-Flow UI/UX Reference Audit</div>
             <div class="brief-meta">
               <span class="brief-tag brief-tag-design">Design QA</span>
-              <span class="brief-status brief-status-progress">Prompts Drafted, Queued for Agent</span>
+              <span class="brief-status brief-status-progress">Fixes In Progress</span>
             </div>
           </div>
         </div>
@@ -392,7 +393,7 @@ footer{background:var(--hero-bg);border-top:1px solid var(--border);padding:22px
             <div class="brief-section-label">Representative Findings</div>
             <div class="brief-req-list">
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Unfilled template placeholder text present across roughly a third of admin- and auditor-facing screens, never replaced with realistic sample content</span></div>
-              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Two diverging versions of the same screen in circulation, one carrying a broken calculated field and leftover internal test copy</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>A broken calculated field (duration not reflecting the set start/end times) paired with leftover internal test copy on a live session-detail screen</span></div>
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Rating inputs defaulting to a pre-filled value instead of an empty state, risking an unintended score being read as submitted</span></div>
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Inconsistent header icon and overflow handling between screens sharing the same underlying component</span></div>
             </div>
@@ -400,6 +401,74 @@ footer{background:var(--hero-bg);border-top:1px solid var(--border);padding:22px
           <div class="brief-section">
             <div class="brief-section-label">Outcome</div>
             <div class="brief-section-text">Findings consolidated into a single batched prompt set for the next AI-agent session, with a separate flag for replacing any residual real personal data in sample content with fictional equivalents before the file is shared externally. Workflow is designed to repeat on future review passes.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ AUTOMATION / APPS SCRIPT ═══════════════════════════ -->
+<section class="arch-section">
+  <div class="arch-inner">
+    <div class="arch-label">Systems &amp; Automation</div>
+    <h2 class="arch-heading">Production Google Apps Script Systems</h2>
+    <p class="arch-sub">Self-taught Google Apps Script (JavaScript) to replace two recurring manual monthly processes with live, maintained automation, including modular script architecture and date/time parsing edge cases.</p>
+    <div class="g1">
+
+      <div class="brief-card">
+        <div class="brief-header">
+          <div class="brief-header-left">
+            <div class="brief-title">CMS Import Generator</div>
+            <div class="brief-meta">
+              <span class="brief-tag brief-tag-auto">Automation</span>
+              <span class="brief-status brief-status-live">Live &amp; Maintained</span>
+            </div>
+          </div>
+        </div>
+        <div class="brief-body">
+          <div class="brief-section">
+            <div class="brief-section-label">Objective</div>
+            <div class="brief-section-text">Replace a fully manual monthly process of consolidating session data from 10+ separate programme schedule spreadsheets (HWE, AKG, CPAP, QUICKHIIT, AFP, MOE, TWSH, and others) into a single values-only XLSX import file for the CMS.</div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">System Design</div>
+            <div class="brief-req-list">
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Programme-specific business rules applied per source: job grouping by location, workout, day, and time; role-based rate tables; location database lookups</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Modular, config-driven architecture: separate rule modules per programme, externalised spreadsheet IDs and column mappings so new programmes can be added without touching core logic</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Diagnostic preview, error log, and historical output log built in for traceability before each import</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="brief-card">
+        <div class="brief-header">
+          <div class="brief-header-left">
+            <div class="brief-title">HPB Audit Findings Generator</div>
+            <div class="brief-meta">
+              <span class="brief-tag brief-tag-auto">Automation</span>
+              <span class="brief-status brief-status-live">Live &amp; Maintained</span>
+            </div>
+          </div>
+        </div>
+        <div class="brief-body">
+          <div class="brief-section">
+            <div class="brief-section-label">Objective</div>
+            <div class="brief-section-text">Replace a fully manual matching process for the monthly HPB audit findings submission, where findings from a Google Form had to be cross-checked by hand against the audit schedule.</div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">System Design</div>
+            <div class="brief-req-list">
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Matches submitted findings against the audit schedule by session ID, or by date, workout, and time for virtual sessions with no fixed session ID</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Auto-flags sessions missing findings and excludes cancelled or removed sessions from the match set</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Populates the director's HPB submission template directly, removing the manual compilation step entirely</span></div>
+            </div>
+          </div>
+          <div class="brief-section">
+            <div class="brief-section-label">Technical Notes</div>
+            <div class="brief-section-text">Self-taught Google Apps Script while building both systems, including debugging spreadsheet date/time parsing bugs across inconsistent source formats.</div>
           </div>
         </div>
       </div>
