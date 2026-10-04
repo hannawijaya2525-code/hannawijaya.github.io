@@ -30,6 +30,7 @@
   --cover-bg: #2B4880;
   --cover-surface: rgba(255,255,255,0.14);
   --cover-border:  rgba(255,255,255,0.18);
+  --duration-fast: 150ms;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -108,7 +109,7 @@ img { max-width: 100%; display: block; }
   border-radius: 50%;
   background: rgba(255,255,255,0.35);
   cursor: pointer;
-  transition: all 0.25s;
+  transition: background var(--duration-fast), transform var(--duration-fast);
 }
 .dot.active { background: #fff; transform: scale(1.5); }
 
@@ -459,7 +460,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: 4px;
-  transition: opacity 0.15s;
+  transition: opacity var(--duration-fast), border-color var(--duration-fast);
 }
 .contact-btn:hover { opacity: 0.88; }
 .contact-btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
