@@ -1741,13 +1741,33 @@ footer {
   transition:transform 380ms cubic-bezier(0.22,1,0.36,1), opacity 280ms cubic-bezier(0.22,1,0.36,1);
 }
 .hero-expand-modal.is-open { opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
-.hero-expand-photo { width:25%; aspect-ratio:1/1; align-self:flex-start; flex-shrink:0; overflow:hidden; }
+.hero-expand-left {
+  width:25%; flex-shrink:0;
+  display:flex; flex-direction:column;
+  padding:32px 24px;
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  overflow-y:auto;
+}
+.hero-expand-photo-frame {
+  padding:6px;
+  background:var(--surface);
+  border:1.5px solid var(--accent);
+  border-radius:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.hero-expand-photo { width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:9px; }
 .hero-expand-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.hero-expand-creds { margin-top:28px; }
+.hero-expand-creds .about-cred-lbl { font-size:10px; margin-bottom:12px; width:auto; padding-top:0; }
+.hero-expand-creds .about-cred-items { gap:14px; }
+.hero-expand-creds .about-cred-item { flex-direction:column; align-items:flex-start; gap:2px; }
+.hero-expand-creds .about-cred-name { font-size:12px; line-height:1.4; }
+.hero-expand-creds .about-cred-date { font-size:10px; }
 .hero-expand-body { flex:1; overflow-y:auto; padding:40px 36px; }
 .hero-expand-body .section-label { margin-bottom:8px; }
 .hero-expand-body .section-heading { font-size:clamp(22px,2.6vw,30px); margin-bottom:18px; }
 .hero-expand-body .about-body p { margin-bottom:14px; }
-.hero-expand-body .about-creds { margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
 .hero-expand-close {
   position:absolute; top:16px; right:16px; z-index:2;
   width:34px; height:34px; border-radius:50%;
@@ -1757,7 +1777,9 @@ footer {
 }
 @media (max-width:768px) {
   .hero-expand-modal { flex-direction:column; width:92vw; height:85vh; }
-  .hero-expand-photo { width:100%; height:160px; }
+  .hero-expand-left { width:100%; flex-direction:row; align-items:flex-start; gap:18px; border-right:none; border-bottom:1px solid var(--border); padding:24px; overflow-y:visible; }
+  .hero-expand-photo-frame { width:96px; flex-shrink:0; }
+  .hero-expand-creds { margin-top:0; }
   .hero-expand-body { padding:28px 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -3830,12 +3852,16 @@ sup.metric-ast { margin-left:1px; }
       '<button class="hero-expand-close" aria-label="Close">' +
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>' +
       '</button>' +
-      '<div class="hero-expand-photo"></div>' +
+      '<div class="hero-expand-left">' +
+        '<div class="hero-expand-photo-frame"><div class="hero-expand-photo"></div></div>' +
+        '<div class="hero-expand-creds"></div>' +
+      '</div>' +
       '<div class="hero-expand-body"></div>';
     document.body.appendChild(overlay);
     document.body.appendChild(modal);
 
     var photoPane = modal.querySelector('.hero-expand-photo');
+    var credsPane = modal.querySelector('.hero-expand-creds');
     var bodyPane = modal.querySelector('.hero-expand-body');
     var closeBtn = modal.querySelector('.hero-expand-close');
     var contentBuilt = false;
@@ -3856,16 +3882,15 @@ sup.metric-ast { margin-left:1px; }
           '<p>I am an <strong>Operations and Systems specialist</strong> based between Batam and Singapore, with two years at Team Axis Pte Ltd growing from app content management to owning the <strong>full product and operations lifecycle</strong>: <strong>requirements gathering</strong>, logic flow design, <strong>developer coordination</strong>, <strong>UAT</strong>, release management, and post-launch monitoring.</p>' +
           '<p>I bridge the operational and technical boundary: identifying problems, translating them into <strong>system requirements</strong>, coordinating with developers, and measuring impact after release. Outputs include <strong>Excel and Google Sheets automation</strong> cutting processes from hours to minutes, two self-taught <strong>Google Apps Script</strong> systems replacing recurring manual monthly processes, an <strong>AI-assisted data validation system</strong> lifting accuracy from 50% to 97%, and a 9-metric <strong>operations dashboard</strong> replacing daily manual reporting.</p>' +
           '<p>My next step is a role in <strong>Operations Analysis</strong>, <strong>Business Operations</strong>, or <strong>Product Operations</strong> where I can apply this full stack of skills at a larger scale. Based between Batam and Singapore, open to <strong>relocation</strong> and <strong>visa sponsorship</strong> across the region.</p>' +
-        '</div>' +
-        '<div class="about-creds">' +
-          '<div class="about-cred-lbl">Credentials</div>' +
-          '<div class="about-cred-items">' +
-            '<div class="about-cred-item"><span class="about-cred-name">Google Data Analytics Professional Certificate</span><span class="about-cred-date">Feb 2026</span></div>' +
-            '<div class="about-cred-item"><span class="about-cred-name">IBM Data Analyst Professional Certificate</span><span class="about-cred-date">In progress</span></div>' +
-            '<div class="about-cred-item"><span class="about-cred-name">Deloitte Data Analytics Job Simulation (Forage)</span><span class="about-cred-date"><a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/side-projects.html" style="color:inherit;text-decoration:underline;">View project</a></span></div>' +
-            '<div class="about-cred-item"><span class="about-cred-name">Forage Product Management Job Simulation</span><span class="about-cred-date"><a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/side-projects.html" style="color:inherit;text-decoration:underline;">View project</a></span></div>' +
-            '<div class="about-cred-item"><span class="about-cred-name">Monash University Malaysia &middot; BA Social Science</span><span class="about-cred-date">CGPA 3.75 &middot; High Achiever Award</span></div>' +
-          '</div>' +
+        '</div>';
+      credsPane.innerHTML =
+        '<div class="about-cred-lbl">Credentials</div>' +
+        '<div class="about-cred-items">' +
+          '<div class="about-cred-item"><span class="about-cred-name">Google Data Analytics Professional Certificate</span><span class="about-cred-date">Feb 2026</span></div>' +
+          '<div class="about-cred-item"><span class="about-cred-name">IBM Data Analyst Professional Certificate</span><span class="about-cred-date">In progress</span></div>' +
+          '<div class="about-cred-item"><span class="about-cred-name">Deloitte Data Analytics Job Simulation (Forage)</span><span class="about-cred-date"><a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/side-projects.html" style="color:inherit;text-decoration:underline;">View project</a></span></div>' +
+          '<div class="about-cred-item"><span class="about-cred-name">Forage Product Management Job Simulation</span><span class="about-cred-date"><a href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/side-projects.html" style="color:inherit;text-decoration:underline;">View project</a></span></div>' +
+          '<div class="about-cred-item"><span class="about-cred-name">Monash University Malaysia &middot; BA Social Science</span><span class="about-cred-date">CGPA 3.75 &middot; High Achiever Award</span></div>' +
         '</div>';
       contentBuilt = true;
     }
