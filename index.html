@@ -1710,14 +1710,18 @@ footer {
 /* ─── Hero card → About expand (watermelon.sh recipe, hand-ported) ── */
 .hero-expand-trigger { cursor:pointer; }
 .hero-expand-cta {
-  display:flex; align-items:center; gap:6px;
-  margin-top:-8px;
-  font-size:11px; font-weight:600; letter-spacing:.03em;
+  display:inline-flex; align-items:center; gap:7px;
+  align-self:flex-start;
+  margin-top:-4px;
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid var(--accent-dash);
+  background:var(--accent-lo);
+  font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
   color:var(--accent);
-  opacity:0.72;
-  transition:opacity 200ms ease, transform 200ms ease;
+  transition:background 200ms ease, transform 200ms ease;
 }
-.hero-expand-trigger:hover .hero-expand-cta { opacity:1; transform:translateX(2px); }
+.hero-expand-trigger:hover .hero-expand-cta { background:var(--accent); color:#fff; transform:translateX(2px); }
 .hero-expand-overlay {
   position:fixed; inset:0; z-index:500;
   background:rgba(20,19,17,0.55);
@@ -1791,45 +1795,45 @@ footer {
   border:1px solid var(--border);
   border-left:3px solid var(--accent);
   border-radius:12px;
-  padding:32px 28px;
+  padding:38px 34px;
   display:flex;
   flex-direction:column;
-  gap:20px;
-  min-width:270px;
-  max-width:320px;
+  gap:22px;
+  min-width:310px;
+  max-width:370px;
   box-shadow:0 2px 16px rgba(0,0,0,0.06);
   overflow:hidden;
 }
 .hero-profile-avatar {
-  width:72px; height:72px;
+  width:84px; height:84px;
   border-radius:50%;
   overflow:hidden;
   flex-shrink:0;
 }
 .hero-profile-name {
-  font-size:15px; font-weight:600;
+  font-size:17px; font-weight:600;
   color:var(--ink); line-height:1.3;
 }
 .hero-profile-title {
-  font-size:12px; color:var(--muted);
+  font-size:13px; color:var(--muted);
   margin-top:-14px; line-height:1.4;
 }
 .hero-profile-links {
-  display:flex; flex-direction:column; gap:8px;
-  padding-top:4px;
+  display:flex; flex-direction:column; gap:9px;
+  padding-top:5px;
   border-top:1px solid var(--border);
 }
 .hero-profile-link {
-  font-size:12px; color:var(--accent);
+  font-size:13px; color:var(--accent);
   text-decoration:none; display:flex; flex-direction:column; gap:1px;
 }
 .hero-profile-link:hover { text-decoration:underline; }
 .hero-profile-location {
-  font-size:12px; color:var(--mid);
+  font-size:13px; color:var(--mid);
   display:flex; flex-direction:column; gap:1px;
 }
 .hero-profile-link-icon {
-  font-size:10px; font-weight:600;
+  font-size:11px; font-weight:600;
   letter-spacing:.08em; text-transform:uppercase;
   color:var(--muted); display:block;
 }
