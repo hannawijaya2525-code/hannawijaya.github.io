@@ -60,6 +60,9 @@ body{
 a{color:inherit;}
 img{display:block;max-width:100%;}
 .wrap{max-width:800px;margin-inline:auto;}
+.intro-grid-bg{position:relative;overflow:hidden;margin-bottom:24px;padding:24px;border-radius:12px;}
+.intro-grid-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);opacity:0.5;background-size:40px 40px;pointer-events:none;}
+.intro-grid-bg > *{position:relative;}
 
 .back{
   display:inline-flex;align-items:center;gap:6px;
@@ -259,6 +262,7 @@ footer{margin-top:80px;padding-top:22px;border-top:1px solid var(--border);}
 
   <a class="back" href="https://hannawijaya2525-code.github.io/hannawijaya.github.io/">&larr; Back to portfolio</a>
 
+  <div class="intro-grid-bg">
   <div class="eyebrow">Ongoing Collection</div>
   <h1>Side Projects</h1>
   <p class="dek">A running collection of self-directed practice work outside Hanna's day-to-day at Team Axis, added to as new work lands. Currently featured: two structured job simulations testing her operating model against unfamiliar domains, a forensic data investigation for Deloitte, and a product management stakeholder-prep exercise, both worked end to end with real deliverables and results.</p>
@@ -270,6 +274,7 @@ footer{margin-top:80px;padding-top:22px;border-top:1px solid var(--border);}
     <div><dt>Tools</dt><dd>Tableau &middot; Excel &middot; Stakeholder Planning</dd></div>
     <div><dt>Completed</dt><dd>September 2026</dd></div>
   </dl>
+  </div>
 
   <!-- ============ PROJECT 1: DELOITTE ============ -->
   <section class="proj">

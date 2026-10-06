@@ -39,8 +39,9 @@ img{max-width:100%;display:block;}a{color:inherit;text-decoration:none;}
 .nav-back{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
 .nav-back:hover{color:var(--accent);}
 
-.page-header{background:var(--hero-bg);border-bottom:1px solid var(--border);padding:120px 48px 64px;}
-.page-header-inner{max-width:1280px;margin:0 auto;}
+.page-header{background:var(--hero-bg);border-bottom:1px solid var(--border);padding:120px 48px 64px;position:relative;overflow:hidden;}
+.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);opacity:0.5;background-size:56px 56px;pointer-events:none;}
+.page-header-inner{max-width:1280px;margin:0 auto;position:relative;}
 .page-eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;}
 .page-title{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(36px,5vw,60px);font-weight:400;line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin-bottom:20px;}
 .page-lede{font-size:16px;font-weight:300;line-height:1.75;color:var(--mid);max-width:600px;text-align:justify;}
