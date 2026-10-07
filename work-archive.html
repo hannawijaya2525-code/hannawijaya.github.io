@@ -437,6 +437,8 @@ footer{background:var(--hero-bg);border-top:1px solid var(--border);padding:22px
             <div class="brief-section-label">System Design</div>
             <div class="brief-req-list">
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Programme-specific business rules applied per source: job grouping by location, workout, day, and time; role-based rate tables; location database lookups</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Workout-intensity-based capacity calculation: every workout type is classified High/Moderate/Low, and session participant capacity is set to the lower of venue capacity or instructor count &times; a per-instructor limit for that intensity</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>The QUICKHIIT module handles both face-to-face and virtual session variants from a single script, each producing its own XLSX against a separate import template</span></div>
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Modular, config-driven architecture: separate rule modules per programme, externalised spreadsheet IDs and column mappings so new programmes can be added without touching core logic</span></div>
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Diagnostic preview, error log, and historical output log built in for traceability before each import</span></div>
             </div>
@@ -462,7 +464,7 @@ footer{background:var(--hero-bg);border-top:1px solid var(--border);padding:22px
           <div class="brief-section">
             <div class="brief-section-label">System Design</div>
             <div class="brief-req-list">
-              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Matches submitted findings against the audit schedule by session ID, or by date, workout, and time for virtual sessions with no fixed session ID</span></div>
+              <div class="brief-req-item"><div class="brief-req-dot"></div><span>Matches submitted findings against the audit schedule by session ID, or by date, workout, and time for virtual sessions with no fixed session ID, with a fallback match when exactly one session of that workout ran that day</span></div>
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Auto-flags sessions missing findings and excludes cancelled or removed sessions from the match set</span></div>
               <div class="brief-req-item"><div class="brief-req-dot"></div><span>Populates the director's HPB submission template directly, removing the manual compilation step entirely</span></div>
             </div>
