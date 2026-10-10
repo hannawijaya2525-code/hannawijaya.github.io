@@ -876,10 +876,17 @@ button { cursor: pointer; font: inherit; }
   .skills-layout { grid-template-columns: 1fr; gap: 40px; }
 }
 /* ─── Contact ─────────────────────────────────────────── */
+.curtain-sticky { position: sticky; top: 0; z-index: 1; background: var(--bg); }
 #contact {
   background: var(--hero-bg);
   color: var(--hero-text);
   padding: 96px 48px;
+  position: relative;
+  z-index: 2;
+  border-radius: 28px 28px 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .curtain-sticky { position: static; }
 }
 #contact .section-label { color: var(--hero-mid); }
 #contact .section-heading { color: var(--hero-text); margin-bottom: 48px; }
@@ -2562,7 +2569,7 @@ sup.metric-ast { margin-left:1px; }
   </div>
 </div>
 
-<section class="section" style="padding-top:64px;padding-bottom:64px;">
+<section class="section curtain-sticky" style="padding-top:64px;padding-bottom:64px;">
   <div class="section-inner">
     <div class="section-label">What colleagues say</div>
     <div class="testimonial-grid">
